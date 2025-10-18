@@ -3,9 +3,13 @@ import{ z }from "zod"
 import users from "../models/user.model.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import { auth } from "../middleware/auth.js";
+import type {Request,Response } from "express"
+import Content from "../models/Content.js";
+import type {Authrequest} from "../middleware/auth.js"
 const router=express();
 
-router.post("/signup",async (req,res)=>{    
+router.post("/signup",async (req:Request,res:Response)=>{    
     try {
         const username=req.body.username;
         const password=req.body.password;
@@ -50,12 +54,12 @@ router.post("/signup",async (req,res)=>{
     }
     
 })
-router.post("/signin",async (req,res)=>{
+router.post("/signin",async (req:Request,res:Response)=>{
     try {
         const username=req.body.username;
         const password=req.body.password;
 
-    const existinguser=await users.findOne({username})
+        const existinguser=await users.findOne({username})
         if (!existinguser) {
             return res.status(404).json({
                 message:"User not exists",
@@ -85,10 +89,59 @@ router.post("/signin",async (req,res)=>{
         
     }
 })
-router.get("/",(req,res)=>{
-    
+
+router.post("/content",auth,async (req:Authrequest,res:Response)=>{
+    try {
+        const type=req.body.type
+        const link=req.body.link
+        const title=req.body.title
+        const tags=req.body.tags
+        const userId=req.user.id;
+        const newcontent= new Content({
+            type:type,
+            link:link,
+            title:title,
+            tags:tags,
+            userId:userId,
+        })
+        await newcontent.save();
+        res.status(200).json({message:"Content added succefully"})
+    } catch (error) {
+        console.error("Error in adding content",error)
+        return res.status(403).json({message:"Error in adding Content try again"})
+    }
 })
-router.get("/",(req,res)=>{
-    
+router.get("/content",auth,async (req:Authrequest,res:Response)=>{
+    try {
+        const userId=req.user.id;
+        const content=await Content.find({userId:userId}).populate("userId","username")
+        if (content.length === 0) {
+            return res.status(404).json({message: "No content found for this user"})
+        }
+        res.status(200).json({
+            content
+        });
+    } catch (error) {
+        console.error("Error in Fetching Content",error);
+        return res.status(500).json({message: "Server error" })
+    }
+})
+
+router.delete("/content",auth,async (req:Authrequest,res:Response)=>{
+    try {
+        const userId=req.user.id;
+        const contetnid=req.body._id;
+        const response=await Content.deleteOne({userId:userId,_id:contetnid})
+        if (!response) {
+            return res.status(404).json({message: "No content found for this user"})
+        }
+        res.status(200).json({
+            message:"Content deleted Succefully",
+            response
+        });
+    } catch (error) {
+        console.error("Error in deleted Content",error);
+        return res.status(500).json({message: "Server error" })
+    }
 })
 export default router

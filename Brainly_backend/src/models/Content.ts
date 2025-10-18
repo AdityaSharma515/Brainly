@@ -4,12 +4,12 @@ import type { Tagmodel as tag } from "./Tags.js";
 import Tag from "./Tags.js";
 import users from "./user.model.js";
 
-const contentTypes = ['image', 'video', 'article', 'audio']; 
+const contentTypes = ["document", "tweet" , "youtube" , "link"]; 
 
 
 interface Contentmodel extends Document {
     link: string,
-    type:string,
+    type:"document" | "tweet" | "youtube" | "link",
     title:string,
     tag:Array<tag>,
     userId: mongoose.Types.ObjectId | Usermodel,
@@ -20,7 +20,7 @@ const ContetnSchema=new Schema<Contentmodel>({
     type:{type:String,enum:contentTypes,required:true},
     title:{type:String ,required:true},
     tag:[{type:String ,ref:Tag}],
-    userId:{type:mongoose.Types.ObjectId,ref:users ,required:true},
+    userId:{type:mongoose.Types.ObjectId,ref:"User" ,required:true},
 
 })
 
