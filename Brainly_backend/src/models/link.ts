@@ -9,9 +9,9 @@ export interface linkmodel extends Document {
 
 const LinkSchema=new Schema<linkmodel>({
     hash:{type:String ,required:true},
-    userId:{type:String,ref:users,required:true}
+    userId:{type:String,ref:"User",required:true}
 })
 
-const link=mongoose.model<linkmodel>("User",LinkSchema);
+const link=mongoose.model<linkmodel>("Link",LinkSchema);
 
 export default link;

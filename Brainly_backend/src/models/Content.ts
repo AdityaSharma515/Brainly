@@ -1,6 +1,6 @@
 import mongoose,{Schema,Document} from "mongoose";
 import type { Usermodel } from "./user.model.js";
-import type { Tagmodel as tag } from "./Tags.js";
+import type { Tagmodel as tag, Tagmodel } from "./Tags.js";
 import Tag from "./Tags.js";
 import users from "./user.model.js";
 
@@ -11,7 +11,7 @@ interface Contentmodel extends Document {
     link: string,
     type:"document" | "tweet" | "youtube" | "link",
     title:string,
-    tag:Array<tag>,
+    tags: Array<mongoose.Types.ObjectId> |Array<Tagmodel>,
     userId: mongoose.Types.ObjectId | Usermodel,
 }
 
@@ -19,7 +19,7 @@ const ContetnSchema=new Schema<Contentmodel>({
     link:{type:String ,required:true},
     type:{type:String,enum:contentTypes,required:true},
     title:{type:String ,required:true},
-    tag:[{type:String ,ref:Tag}],
+    tags:[{type:mongoose.Types.ObjectId ,ref:"Tag"}],
     userId:{type:mongoose.Types.ObjectId,ref:"User" ,required:true},
 
 })
