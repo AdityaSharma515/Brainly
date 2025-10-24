@@ -1,8 +1,7 @@
 import mongoose,{Schema,Document} from "mongoose";
 import type { Usermodel } from "./user.model.js";
-import type { Tagmodel as tag, Tagmodel } from "./Tags.js";
-import Tag from "./Tags.js";
-import users from "./user.model.js";
+import type { Tagmodel } from "./Tags.js";
+
 
 const contentTypes = ["document", "tweet" , "youtube" , "link"]; 
 
