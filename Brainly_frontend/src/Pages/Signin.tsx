@@ -2,11 +2,13 @@ import { useRef } from "react"
 import Button from "../components/Button"
 import axios from "axios"
 import toast, { Toaster } from "react-hot-toast"
+import { useNavigate } from "react-router-dom"
 
 
 const Signin = () => {
     const usernameref=useRef<HTMLInputElement>(null)
     const passwordref=useRef<HTMLInputElement>(null)
+    const navigation=useNavigate();
     async function signin(){
         const username=usernameref.current?.value;
         const password=passwordref.current?.value;
@@ -23,6 +25,7 @@ const Signin = () => {
             console.log(response.data.token)
             localStorage.setItem("token",response.data.token);
             toast.success("Signed in Succefuly")
+            navigation("/dashboard");
         } catch (error) {
             toast.error("Failed to Sign in")
             console.error("Failed to Sign in",error);

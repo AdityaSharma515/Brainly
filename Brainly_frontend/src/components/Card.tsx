@@ -2,10 +2,13 @@ import axios from "axios"
 import Document from "../Icons/Document"
 import ShareIcon from "../Icons/ShareIcon"
 import Trash from "../Icons/Trash"
-import Twitter from "../Icons/Twitter"
 import Youtube from "../Icons/Youtube"
 import toast from "react-hot-toast"
 import LinkIcon from "../Icons/LinkIcon"
+import Twitter from "../Icons/Twitter"
+import Twiter from "./Twiter"
+import ReactPlayer from "react-player"
+import YouTube from "./YouTube"
 
 interface Tag{
   _id:string,
@@ -26,7 +29,7 @@ const typeclases={
 }
 
 
-const Card = ({type,title,tags}:CardProps) => {
+const Card = ({type,title,tags,link}:CardProps) => {
   async function deletecontent(){
     try {
       await axios.delete("http://localhost:5001/api/v1/content",{
@@ -40,8 +43,10 @@ const Card = ({type,title,tags}:CardProps) => {
       toast.error("Failed to delete")
     }
   }
+  
+
   return (
-    <div className="flex flex-col w-64  border border-gray-200 rounded-xl shadow-sm bg-white">
+    <div className="flex flex-col w-80  border border-gray-200 rounded-xl shadow-sm bg-white">
         <div className="flex items-center justify-between p-4 border-b border-gray-100">
             <div className="flex items-center gap-2 font-medium text-gray-800">{typeclases[type]} {title}</div>
             <div className="flex items-center gap-2 font-medium text-gray-800">
@@ -50,12 +55,13 @@ const Card = ({type,title,tags}:CardProps) => {
             </div>
         </div>
         <div className="flex flex-wrap gap-2 px-4 py-3 mt-auto">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea porro hic, reiciendis quo delectus nesciunt animi, neque rem amet consequuntur maxime consectetur quidem sapiente ipsa et sit odio? Officiis, distinctio?
+          {type==="twitter"&&<Twiter link={link}/>}
+          {type==="youtube"&&<YouTube link={link}/>}
         </div>
         <div className="flex flex-wrap gap-2 ml-2" >
           {tags.map((tag)=>(
             <span key={tag._id} className="px-3 py-1 text-sm font-medium text-indigo-700 bg-indigo-100 rounded-full border border-indigo-200">
-                #{tag.title}
+                {tag.title}
             </span>
           ))}
         </div>

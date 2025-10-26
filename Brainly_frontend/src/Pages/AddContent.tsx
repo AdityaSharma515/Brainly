@@ -2,6 +2,7 @@ import { useRef } from "react"
 import Button from "../components/Button"
 import axios from "axios"
 import toast, { Toaster } from "react-hot-toast"
+import { useNavigate } from "react-router-dom"
 
 
 const AddContent = () => {
@@ -9,6 +10,7 @@ const AddContent = () => {
     const linkref=useRef<HTMLInputElement>(null)
     const tagref=useRef<HTMLInputElement>(null)
     const typeref=useRef<HTMLSelectElement>(null)
+    const navigation=useNavigate();
     async function addcontent(){
         const title=titleref.current?.value;
         const link=linkref.current?.value;
@@ -29,6 +31,7 @@ const AddContent = () => {
                 headers:{"Authorization":"Bearer "+localStorage.getItem("token")}
             })
             toast.success("Content added Succefully")
+            navigation("/dashboard");
         } catch (error) {
             console.error("Error in adding Content",error);
             toast.error("Error adding Content")
