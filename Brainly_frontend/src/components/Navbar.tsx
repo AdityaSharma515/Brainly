@@ -1,32 +1,21 @@
-import Document from "../Icons/Document"
-import Logo from "../Icons/Logo"
-import Twitter from "../Icons/Twitter"
-import Youtube from "../Icons/Youtube"
-
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+    const navigation=useNavigate();
   return (
-    <aside className="w-64 h-screen border-r border-gray-200 flex flex-col  ">
-        <div className="flex items-center gap-2 p-4 border-b border-gray-100">
-            <div><Logo/></div>
-            <div className="font-semibold text-xl">Second Brain</div>
-        </div>
-        <nav className="flex flex-col p-4 gap-2 text-gray-700">
-            <div className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 transition-colors">
-                <Twitter/>
-                <button >Tweets</button>
-            </div>
-            <div className="flex items-center gap-5 p-3 rounded-md hover:bg-gray-100 transition-colors">
-                <Youtube/>
-                <button>Videos</button>
-            </div>
-            <div className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 transition-colors">
-                <Document/>
-                <button>Documents</button>
-            </div>           
-        </nav>
-    </aside>
-  )
-}
+    <header className="flex justify-between items-center px-8 py-4 bg-white shadow-sm">
+      <div className="text-2xl font-bold text-indigo-600">SecondBrain</div>
 
-export default Navbar
+      <div className="flex gap-4">
+        <button onClick={()=>navigation("/signin")} className="px-4 py-2 text-indigo-600 border border-indigo-600 rounded-md hover:bg-indigo-50 transition">
+          Sign In
+        </button>
+        <button onClick={()=>navigation("/signup")} className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition">
+          Sign Up
+        </button>
+      </div>
+    </header>
+  );
+};
+
+export default Navbar;

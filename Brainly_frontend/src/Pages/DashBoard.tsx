@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
 import Button from "../components/Button"
 import Card from "../components/Card"
-import Navbar from "../components/Navbar"
+import Navbar from "../components/Sidebar"
 import AddIcon from "../Icons/AddIcon"
 import ShareIcon from "../Icons/ShareIcon"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { DialogShare } from "@/components/Dialog"
+
 
 
 interface Tag{
@@ -23,7 +25,7 @@ interface CardProps{
 const DashBoard = ()=> {
     const navigation=useNavigate();
     function share() {
-        
+        <DialogShare/>
     }
     const [content,setcontent]=useState<CardProps[]>([])
     useEffect(()=>{
