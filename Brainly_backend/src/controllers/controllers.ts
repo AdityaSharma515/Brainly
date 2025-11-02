@@ -168,15 +168,15 @@ export async function createshare(req:Authrequest,res:Response){
         }
 
         if (share) {
-            const linkdoc=await link.findOne({userId:userId})
+            let linkdoc=await link.findOne({userId:userId})
             if (!linkdoc) {
-                const linkdoc= new link({
+                linkdoc= new link({
                     hash:randomBytes(8).toString("hex"),
                     userId
                 });
                 await linkdoc.save();
             }
-            const shareablelink=`http://localhost:5001/api/v1/brain/${linkdoc!.hash}`
+            const shareablelink=`http://localhost:5173/api/v1/brain/${linkdoc!.hash}`
             return res.status(200).json({
                 message:"link created succefully",
                 shareablelink,

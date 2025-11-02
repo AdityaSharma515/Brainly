@@ -7,7 +7,6 @@ import toast from "react-hot-toast"
 import LinkIcon from "../Icons/LinkIcon"
 import Twitter from "../Icons/Twitter"
 import Twiter from "./Twiter"
-import ReactPlayer from "react-player"
 import YouTube from "./YouTube"
 
 interface Tag{
@@ -54,9 +53,9 @@ const Card = ({type,title,tags,link}:CardProps) => {
               <button onClick={deletecontent} className="cursor-pointer" ><Trash/></button>
             </div>
         </div>
-        <div className="flex flex-wrap gap-2 px-4 py-3 mt-auto">
+        <div className="flex flex-wrap gap-2 px-4 py-2 mt-auto mb-5 ">
           {type==="twitter"&&<Twiter link={link}/>}
-          {type==="youtube"&&<YouTube link={link}/>}
+          {type==="youtube"&&<YouTube url={link}/>}
         </div>
         <div className="flex flex-wrap gap-2 ml-2" >
           {tags.map((tag)=>(

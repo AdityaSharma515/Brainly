@@ -37,7 +37,7 @@ const Hero = () => {
         <button onClick={()=>navigation("/signup")} className="px-6 py-3 rounded-lg bg-indigo-600 text-white font-semibold shadow-md hover:bg-indigo-700 transition-all duration-300">
           Get Started
         </button>
-        <button className="px-6 py-3 rounded-lg border border-indigo-600 text-indigo-600 font-semibold hover:bg-indigo-50 transition-all duration-300">
+        <button onClick={()=>navigation("/signup")} className="px-6 py-3 rounded-lg border border-indigo-600 text-indigo-600 font-semibold hover:bg-indigo-50 transition-all duration-300">
           Learn More
         </button>
       </motion.div>
